@@ -42,7 +42,7 @@ rollDiceBtn.addEventListener("click", function() {
         paraRiskMessage.style.display = "block"
     }
     if(player1Sum >=21 || player2Sum >=21){
-        displayRiskBtnAndMessage()
+        hideRiskBtnAndMessage()
     }
 })
 
@@ -83,7 +83,7 @@ function player1Wins(){
     message.textContent = "Player 1 Wins"
     diplayDiceBtnAndConditionPara()
     displayActiveDice1Shadow()
-    displayRiskBtnAndMessage()
+    hideRiskBtnAndMessage()
 }
 
 function player2(){
@@ -95,10 +95,10 @@ function player2Wins(){
     message.textContent = "Player 2 Wins"
     diplayDiceBtnAndConditionPara()
     displayActiveDice2Shadow()
-    displayRiskBtnAndMessage()
+    hideRiskBtnAndMessage()
 }
 
-function displayRiskBtnAndMessage(){
+function hideRiskBtnAndMessage(){
     riskBtn.style.display = "none"
     paraRiskMessage.style.display = "none"
 }
