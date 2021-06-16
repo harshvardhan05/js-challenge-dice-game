@@ -15,43 +15,25 @@ let count = 0;
 
 resetBtn.addEventListener("click", function() {
    location.reload()
-
 })
 
 rollDiceBtn.addEventListener("click", function() {
         count++
+        let score= rollDice()
         if(count%2 !=0){
-            let score= rollDice()
             player1Sum += score
             player1Dice.textContent = score
-            document.querySelector("#player1-scoreboard").textContent = player1Sum
-            message.textContent = "Player 2 Turn"
-            player1Dice.classList.remove("active")
-            player2Dice.classList.add("active")
+            player1()
             if(player1Sum>=21){
-                message.textContent = "Player 1 Wins"
-                rollDiceBtn.style.display="none"
-                resetBtn.style.display="block"
-                paraCondition.style.display="none"
-                player2Dice.classList.remove("active")
-                player1Dice.classList.add("active")
+                player1Wins()
             }
         }
         else{
-            let score= rollDice()
             player2Sum += score
-            document.querySelector("#player2Dice").textContent = score
-            document.querySelector("#player2-scoreboard").textContent = player2Sum
-            message.textContent = "Player 1 Turn"
-            player2Dice.classList.remove("active")
-            player1Dice.classList.add("active")
+            player2Dice.textContent = score
+            player2()
             if(player2Sum>=21){
-                message.textContent = "Player 2 Wins"
-                rollDiceBtn.style.display="none"
-                resetBtn.style.display="block"
-                paraCondition.style.display="none"
-                player1Dice.classList.remove("active")
-                player2Dice.classList.add("active")
+                player2Wins()
             }
         }
 
@@ -59,52 +41,30 @@ rollDiceBtn.addEventListener("click", function() {
         riskBtn.style.display = "block"
         paraRiskMessage.style.display = "block"
     }
+    if(player1Sum >=21 || player2Sum >=21){
+        displayRiskBtnAndMessage()
+    }
 })
 
 riskBtn.addEventListener("click", function() {
     count++
-        console.log(count)
-    let points = rollDice()
-    let displayPoints = points
-        console.log(points)
-    points==2 || points==4 || points==5  ? points = 0 : points *= 2
-        console.log(points)
+    let score = rollDice()
+    let displayScore = score
+    score==2 || score==4 || score==5  ? score = 0 : score *= 2
     if(count%2 != 0){
-        player1Sum += points
-            console.log(player1Sum)
-        player1Dice.textContent = displayPoints
-        document.querySelector("#player1-scoreboard").textContent = player1Sum
-        message.textContent = "Player 2 Turn"
-        player1Dice.classList.remove("active")
-        player2Dice.classList.add("active")
+        player1Sum += score
+        player1Dice.textContent = displayScore
+        player1()
         if(player1Sum>=21){
-            message.textContent = "Player 1 Wins"
-            rollDiceBtn.style.display="none"
-            resetBtn.style.display="block"
-            paraCondition.style.display="none"
-            player2Dice.classList.remove("active")
-            player1Dice.classList.add("active")
-            riskBtn.style.display = "none"
-            paraRiskMessage.style.display = "none"
+            player1Wins()
         }
 
     }else{
-        player2Sum += points
-            console.log(player2Sum)
-        player2Dice.textContent = displayPoints
-        document.querySelector("#player2-scoreboard").textContent = player2Sum
-        message.textContent = "Player 1 Turn" 
-        player2Dice.classList.remove("active")
-        player1Dice.classList.add("active")
+        player2Sum += score
+        player2Dice.textContent = displayScore
+        player2()
         if(player2Sum>=21){
-            message.textContent = "Player 2 Wins"
-            rollDiceBtn.style.display="none"
-            resetBtn.style.display="block"
-            paraCondition.style.display="none"
-            player1Dice.classList.remove("active")
-            player2Dice.classList.add("active")
-            riskBtn.style.display = "none"
-            paraRiskMessage.style.display = "none"
+            player2Wins()
         }
     }
 }) 
@@ -112,5 +72,47 @@ riskBtn.addEventListener("click", function() {
 function rollDice(){
     let generatedNum = Math.ceil(Math.random()*6)
     return generatedNum
+}
+
+function player1(){
+    document.querySelector("#player1-scoreboard").textContent = player1Sum
+    message.textContent = "Player 2 Turn"
+    displayActiveDice2Shadow()
+}
+function player1Wins(){
+    message.textContent = "Player 1 Wins"
+    diplayDiceBtnAndConditionPara()
+    displayActiveDice1Shadow()
+    displayRiskBtnAndMessage()
+}
+
+function player2(){
+    document.querySelector("#player2-scoreboard").textContent = player2Sum
+    message.textContent = "Player 1 Turn"
+    displayActiveDice1Shadow()
+}
+function player2Wins(){
+    message.textContent = "Player 2 Wins"
+    diplayDiceBtnAndConditionPara()
+    displayActiveDice2Shadow()
+    displayRiskBtnAndMessage()
+}
+
+function displayRiskBtnAndMessage(){
+    riskBtn.style.display = "none"
+    paraRiskMessage.style.display = "none"
+}
+function diplayDiceBtnAndConditionPara(){
+    rollDiceBtn.style.display="none"
+    resetBtn.style.display="block"
+    paraCondition.style.display="none"
+}
+function displayActiveDice1Shadow(){
+    player2Dice.classList.remove("active")
+    player1Dice.classList.add("active")
+}
+function displayActiveDice2Shadow(){
+    player1Dice.classList.remove("active")
+    player2Dice.classList.add("active")
 }
 
